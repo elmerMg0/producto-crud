@@ -4,7 +4,7 @@ import { ApiServices } from "../services/api.services";
 export default function Producto() {
   const [products, setProducts] = useState([]);
   const [infoProducts, setInfoProducts] = useState({})
-  const [pageNumber, setPageNumber] = useState(200)
+  const [pageNumber, setPageNumber] = useState(1)
   useEffect(() => {
     getProducts();
   }, []);
@@ -13,6 +13,15 @@ export default function Producto() {
     getProducts();
 
   }, [pageNumber])
+//desmontaje de componentes
+/*   useEffect(() => {
+    first
+  
+    return () => {
+      second
+    }
+  }, [third]) */
+  
 
   function getProducts(){
     ApiServices.getProductos( pageNumber )
@@ -23,7 +32,7 @@ export default function Producto() {
   }
 
   function updateProduct(){
-    ApiServices.updateProduct( { name: "Pepsi", descripcion: "Bebida de cola", precio: "1.5"} , 1)
+    ApiServices.updateProduct( { nombre: "Pepsi", descripcion: "Bebida pepsi", precio: "texto"} , 1)
                 .then((res)=> {
                     console.log(res)
                 })

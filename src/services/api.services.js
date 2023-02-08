@@ -25,11 +25,28 @@ export const ApiServices = {
             body: JSON.stringify(product)
         })
         const data = await response.json();
+        data.status = response.status;
         return data;
         
       } catch (error) {
           console.error("Se produjo un error", error);
       }
+    },
+    createProducto : async ( product ) => {
+      try {
+        const response = await fetch(`${APIURL}producto/create?`,{
+          method: "POST",
+          headers: {
+            'content-type': "application/json"
+          },
+          body: JSON.stringify(product)
+        });
+        const data = await response.json();
+        data.status = response.status;
+        return data;
+      } catch (error) {
+        return error;
+      }
+     
     }
-    ,
 }
