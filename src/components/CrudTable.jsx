@@ -5,7 +5,7 @@ import "../styles/styles.css"
 
 
 
-const CrudTable = ({ products }) => {
+const CrudTable = ({ products , deleteProduct, setDataToEdit }) => {
   return (
     <div>
       <h3 className="center">List of products</h3>
@@ -22,7 +22,7 @@ const CrudTable = ({ products }) => {
 
         <tbody>
           {products.length > 0 ? 
-            products.map((product, index) =>  <CrudTableRow key={index} product={product} />)
+            products.map((product, index) =>  <CrudTableRow key={index} product={product} deleteProduct={deleteProduct} setDataToEdit={setDataToEdit}/>)
            : 
             <tr>
               <td colSpan={5}>No existen elementos aun</td>

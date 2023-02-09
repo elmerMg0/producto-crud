@@ -1,6 +1,6 @@
 import React from "react";
 import {Button} from 'reactstrap'  
-const CrudTableRow = ( {product}) => {
+const CrudTableRow = ( {product , deleteProduct, setDataToEdit}) => {
   return (
     <tr>
       <td>{product.id}</td>
@@ -9,14 +9,12 @@ const CrudTableRow = ( {product}) => {
       <td>{product.stock}</td>
       <td>
         <Button
-          onClick={() => {
-            
-          }}
+          onClick={() => setDataToEdit(product)}
           color="primary"
         >
           Editar
         </Button>{" "}
-        <Button color="danger"> Eliminar</Button>
+        <Button color="danger" onClick={() => deleteProduct(product.id)}> Eliminar</Button>
       </td>
     </tr>
   );

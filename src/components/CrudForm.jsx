@@ -1,18 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Button,Modal, ModalBody, ModalHeader, FormGroup, ModalFooter} from 'reactstrap'  
 
     const initialForm = {
-        name: "",
-        description: "",
-        price: "",
+        nombre: "",
+        descripcion: "",
+        precio: "",
         stock: "",
-        marcaId: "",
-        seccionId: "",
-        id: ""
+        marca_id: "",
+        seccion_id: "",
     }
 
-const CrudForm = ( createProduct, updateProduct, dataToEdit, setDataToEdit) => {
-    const [form, setForm] = useState(initialForm)
+const CrudForm = ( {createProduct, updateProduct, dataToEdit, setDataToEdit}) => {
+    const [form, setForm] = useState(initialForm);
+
+    useEffect( ()=> {
+        if(dataToEdit){
+            setForm(dataToEdit);
+        }
+    },[dataToEdit])
+    
 
     const handleSubmit = (e) => {
         console.log("enviar")
@@ -20,10 +26,10 @@ const CrudForm = ( createProduct, updateProduct, dataToEdit, setDataToEdit) => {
         /* if(!form.name || !form.precio || !form.stock || !form.marcaId  || !form.seccionId){
             alert("Datos incompletos")
         } */
-        if(form.id === null){
+        if(!form.id){
             createProduct(form);
         }else{
-            updateProduct(form)
+            updateProduct(form, form.id)
         }
         handleReset();
     }    
@@ -36,34 +42,34 @@ const CrudForm = ( createProduct, updateProduct, dataToEdit, setDataToEdit) => {
 
     const handleReset = () => {
         setForm(initialForm);
-        //setDataToEdit(null);
+        setDataToEdit(null);
     }
   return (
     <form onSubmit={handleSubmit}>
             <ModalBody>
                 <FormGroup>
                     <label>Nombre</label>
-                    <input required className='form-control' name='name' type="text" onChange={handleChange} value={form.name}/>
+                    <input required className='form-control' name='nombre' type="text" onChange={handleChange} value={form.nombre}/>
                 </FormGroup>
                 <FormGroup>
                     <label >Descripción</label>
-                    <textarea className='form-control' name='description' type="text" onChange={handleChange} value={form.description}/>
+                    <textarea className='form-control' name='descripcion' type="text" onChange={handleChange} value={form.descripcion}/>
                 </FormGroup>
                 <FormGroup>
                     <label >Precio</label>
-                    <input required className='form-control' name='price' type="number" onChange={handleChange} value={form.price} />
+                    <input required className='form-control' name='precio' type="number" onChange={handleChange} value={form.precio} />
                 </FormGroup>
                 <FormGroup>
                     <label >Stock</label>
-                    <input required className='form-control' name='stock' type="text" onChange={handleChange}/>
+                    <input required className='form-control' name='stock' type="text" onChange={handleChange} value={form.stock}/>
                 </FormGroup>
                 <FormGroup>
                     <label >marca_id</label>
-                    <input required className='form-control' name='marcaId' type="number" onChange={handleChange}/>
+                    <input required className='form-control' name='marca_id' type="number" onChange={handleChange} value={form.marca_id}/>
                 </FormGroup>
                 <FormGroup>
                     <label >seccion_id</label>
-                    <input required className='form-control' name='seccionId' type="number" onChange={handleChange }/>
+                    <input required className='form-control' name='seccion_id' type="number" onChange={handleChange} value={form.seccion_id}/>
                 </FormGroup>
 
             </ModalBody>

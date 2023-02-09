@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { ApiServices } from "../services/api.services";
-import ProductForm from "./ProductForm";
 import { Table, Container, Button } from "reactstrap";
 import "../styles/styles.css";
 import CrudForm from "./CrudForm";
 import CrudTable from './CrudTable'
+import { toast , Toaster} from "react-hot-toast";
 
 export default function Producto() {
   const [products, setProducts] = useState([]);
@@ -17,9 +17,6 @@ export default function Producto() {
 
 
 
-  useEffect(() => {
-    getProducts();
-  }, []);
 
   useEffect(() => {
     getProducts();
@@ -33,19 +30,51 @@ export default function Producto() {
     });
   }
 
+  const showToast = ( message, icon) =>
+  {
+    toast(message, {
+      icon: icon,
+      duration: 3000,
+      style: {
+        border: "2px solid #ff7c01",
+        padding: "10px",
+        color: "#fff",
+        background: "#000",
+        borderRadius: "4%",
+      },
+    });
+  } 
 
   const  createProduct = (product) => {
-    ApiServices.createProducto(product).then((res) => console.log(res));
+    ApiServices.createProducto(product).then((res) =>{ 
+      if(res.status === 201){
+        showToast( `${res.message}` , "✅" )
+      }else{
+        showToast( `${res.message}, error: ${res.error}` , "✅" )
+      }
+    })
   }
+
 
   const updateProduct = (product, id) => {
     ApiServices.updateProduct(product, id).then((res) => {
-      console.log(res);
+      getProducts();
+      toast("Pagos Establecidas", {
+        icon: "✅",
+        duration: 3000,
+        style: {
+          border: "2px solid #ff7c01",
+          padding: "10px",
+          color: "#fff",
+          background: "#000",
+          borderRadius: "4%",
+        },
+      });
     });
-    console.log("update product...");
   }
   const deleteProduct = (id) => {
-
+    ApiServices.deleteProduct(id)
+                .then( res => console.log(res));
   }
 
   return (
@@ -60,6 +89,7 @@ export default function Producto() {
           null
         }
       </Container>
+      <Toaster />
     </>
   );
 }

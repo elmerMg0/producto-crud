@@ -46,4 +46,22 @@ export const ApiServices = {
       }
      
     }
+    ,
+    deleteProduct : async ( id ) => {
+      try {
+        const response = await fetch(`${APIURL}producto/delete?id=${id}` ,{
+          method: "DELETE",
+          headers: {
+            'content-type': "application/json"
+          },
+          //body: JSON.stringify(id)
+        });
+        const data = await response.json();
+        data.status = response.status;
+        return data;
+      } catch (error) {
+        return error;
+      }
+     
+    }
 }
