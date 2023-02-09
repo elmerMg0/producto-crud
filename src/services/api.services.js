@@ -11,9 +11,6 @@ export const ApiServices = {
         } catch (error) {
             console.error("Se produjo un error", error);
         }
-                                
-      /*  then( (res) => response = res.json())
-         .catch( error => console.error(error)) */
     },
     updateProduct : async ( product, id ) => {
       try {
@@ -34,7 +31,7 @@ export const ApiServices = {
     },
     createProducto : async ( product ) => {
       try {
-        const response = await fetch(`${APIURL}producto/create?`,{
+        const response = await fetch(`${APIURL}producto/create`,{
           method: "POST",
           headers: {
             'content-type': "application/json"

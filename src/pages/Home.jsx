@@ -1,9 +1,9 @@
 import React from 'react'
-import Header from '../components/Header'
+import Producto from '../components/CrudProduct'
 function Home() {
   return (
     <div>
-        <Header/>
+        <Producto/>
     </div>
   )
 }
