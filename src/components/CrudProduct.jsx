@@ -5,9 +5,12 @@ import "../styles/styles.css";
 import CrudForm from "./CrudForm";
 import CrudTable from "./CrudTable";
 import { toast, Toaster } from "react-hot-toast";
+import ProductCategory from "./ProductCategory";
+import UnssignProducCategory from "./UnssignProducCategory";
 
 export default function Producto() {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [infoProducts, setInfoProducts] = useState({});
   const [paginationInfo, setPaginationInfo] = useState({});
   const [pageNumber, setPageNumber] = useState(1);
@@ -15,18 +18,33 @@ export default function Producto() {
   const [dataToEdit, setDataToEdit] = useState(null);
 
   useEffect(() => {
+    getCategories();
+    getCategoriesBelongProduct();
+  }, []);
+
+  useEffect(() => {
     getProducts();
   }, [pageNumber, pageSize]);
   //desmontaje de componentes
 
+  const getCategoriesBelongProduct = ( id ) => {
+    ApiServices.getCategoriesBelongProduct( id )
+                .then( res => console.log(res))
+  }
+
+  const getCategories = () => {
+    ApiServices.getCategories().then((res) => {
+      console.log(res);
+      setCategories(res.categories);
+    });
+  };
+
   function getProducts() {
     ApiServices.getProductos(pageNumber, pageSize).then((res) => {
-      if(res.status === 200){
+      if (res.status === 200) {
         setProducts(res.data);
         setPaginationInfo(res.pageInfo);
-        console.log(200)
       }
-      console.log(res);
     });
   }
 
@@ -59,6 +77,7 @@ export default function Producto() {
     ApiServices.updateProduct(product, id).then((res) => {
       getProducts();
       showToast(res.message, "✅");
+      console.log(res);
     });
   };
   const deleteProduct = (id) => {
@@ -74,11 +93,25 @@ export default function Producto() {
     }
   };
 
+  const assignCategoryToProduct = (productId, categoryId) => {
+    ApiServices.assignCategoryProduct(productId, categoryId).
+                then((res) =>{
+                  res.status === 200 ? showToast(res.message, "✅") : showToast(res.message,  "⚠️") 
+                }
+    );
+  };
+
+  const unssignCategoryToProduct = (productId, categoryId) => {
+    ApiServices.unssignCategoryProduct(productId, categoryId).
+                then((res) =>{
+                  res.status === 200 ? showToast(res.message, "✅") : showToast(res.message,  "⚠️") 
+                }
+    );
+  };
+
   return (
     <>
-      <h3>
-        {dataToEdit ? "Edit Product" : "Create New Producto"}{" "}
-      </h3>
+      <h3>{dataToEdit ? "Edit Product" : "Create New Producto"} </h3>
       <div className="container">
         <CrudForm
           createProduct={createProduct}
@@ -96,6 +129,21 @@ export default function Producto() {
             setPageSize={setPageSize}
           />
         ) : null}
+      </div>
+      <div className="">
+
+        <ProductCategory
+          categories={categories}
+          products={products}
+          assignCategoryToProduct={assignCategoryToProduct}
+          />
+        
+        <UnssignProducCategory
+          categories={categories}
+          products={products}
+          unssignCategoryToProduct={unssignCategoryToProduct}
+          />
+        
       </div>
       <Toaster />
     </>

@@ -63,6 +63,59 @@ export const ApiServices = {
       } catch (error) {
         return error;
       }
-     
-    }
+    },
+    getCategories : async ( ) => {
+      //let response = {} ;
+      try {
+        const response = await fetch(`${APIURL}categoria/index`)
+        const data = await response.json();
+        data.status = response.status;
+        return data;
+        
+      } catch (error) {
+          console.error("Se produjo un error", error);
+      }
+     },
+
+     getCategoriesBelongProduct : async ( id ) => {
+      //let response = {} ;
+      try {
+        const response = await fetch(`${APIURL}categoria/get-categories-belong-product?producto_id${id}`)
+        const data = await response.json();
+        data.status = response.status;
+        return data;
+        
+      } catch (error) {
+          console.error("Se produjo un error", error);
+      }
+     },
+
+     assignCategoryProduct : async ( productId, categoryId ) => {
+      //let response = {} ;
+      try {
+        const response = await fetch(`${APIURL}producto/assign-category?producto_id=${productId}&categoria_id=${categoryId}`);
+        const data = await response.json();
+        data.status = response.status;
+        return data;
+        
+      } catch (error) {
+          console.error("Se produjo un error", error);
+      }
+     },
+
+     unssignCategoryProduct : async ( productId, categoryId ) => {
+      //let response = {} ;
+      try {
+        const response = await fetch(`${APIURL}producto/unssign-category?producto_id=${productId}&categoria_id=${categoryId}`);
+        const data = await response.json();
+        data.status = response.status;
+        return data;
+        
+      } catch (error) {
+          console.error("Se produjo un error", error);
+      }
+     },
+
+
+
 }
