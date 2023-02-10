@@ -1,18 +1,22 @@
 import React from "react";
 import CrudTableRow from "./CrudTableRow";
-import { Button, Table } from "reactstrap";
-import "../styles/styles.css"
+import "../styles/styles.css";
+import Paginador from "./Paginador";
 
-
-
-const CrudTable = ({ products , deleteProduct, setDataToEdit }) => {
+const CrudTable = ({
+  products,
+  deleteProduct,
+  setDataToEdit,
+  paginationInfo,
+  setPageNumber,
+  setPageSize,
+}) => {
   return (
-    <div>
-      <h3 className="center">List of products</h3>
-      <Table>
+    <div className="contenedor-table">
+      <h3 className="center">Products List</h3>
+      <table>
         <thead>
           <tr>
-            <th>Id</th>
             <th>Nombre</th>
             <th>Precio</th>
             <th>Stock</th>
@@ -21,15 +25,31 @@ const CrudTable = ({ products , deleteProduct, setDataToEdit }) => {
         </thead>
 
         <tbody>
-          {products.length > 0 ? 
-            products.map((product, index) =>  <CrudTableRow key={index} product={product} deleteProduct={deleteProduct} setDataToEdit={setDataToEdit}/>)
-           : 
+          {products.length > 0 ? (
+            products.map((product, index) => (
+              <CrudTableRow
+                key={index}
+                product={product}
+                deleteProduct={deleteProduct}
+                setDataToEdit={setDataToEdit}
+              />
+            ))
+          ) : (
             <tr>
-              <td colSpan={5}>No existen elementos aun</td>
+              <td colSpan={5}>No existen productos</td>
             </tr>
-          }
+          )}
+          <tr>
+            <td colSpan={5}>
+              <Paginador
+                paginationInfo={paginationInfo}
+                setPageNumber={setPageNumber}
+                setPageSize={setPageSize}
+              />
+            </td>
+          </tr>
         </tbody>
-      </Table>
+      </table>
     </div>
   );
 };

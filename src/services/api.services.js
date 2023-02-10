@@ -1,11 +1,12 @@
 const APIURL = process.env.REACT_APP_API_URL;
 
 export const ApiServices = {
-    getProductos : async ( pageNumber) => {
+    getProductos : async ( pageNumber, pageSize) => {
         //let response = {} ;
         try {
-          const response = await fetch(APIURL+"producto/index?page="+pageNumber)
+          const response = await fetch(`${APIURL}producto/index?page=${pageNumber}&pageSize=${pageSize}`)
           const data = await response.json();
+          data.status = response.status;
           return data;
           
         } catch (error) {

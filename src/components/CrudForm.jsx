@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import {Button,Modal, ModalBody, ModalHeader, FormGroup, ModalFooter} from 'reactstrap'  
 
     const initialForm = {
         nombre: "",
@@ -45,39 +44,39 @@ const CrudForm = ( {createProduct, updateProduct, dataToEdit, setDataToEdit}) =>
         setDataToEdit(null);
     }
   return (
-    <form onSubmit={handleSubmit}>
-            <ModalBody>
-                <FormGroup>
+    <form onSubmit={handleSubmit} className="form">
+            <div className='form-inputs'>
+                <div className='form-card'>
                     <label>Nombre</label>
                     <input required className='form-control' name='nombre' type="text" onChange={handleChange} value={form.nombre}/>
-                </FormGroup>
-                <FormGroup>
+                </div>
+                <div className='form-card'>
                     <label >Descripción</label>
                     <textarea className='form-control' name='descripcion' type="text" onChange={handleChange} value={form.descripcion}/>
-                </FormGroup>
-                <FormGroup>
+                </div>
+                <div className='form-card'>
                     <label >Precio</label>
                     <input required className='form-control' name='precio' type="number" onChange={handleChange} value={form.precio} />
-                </FormGroup>
-                <FormGroup>
+                </div>
+                <div className='form-card'>
                     <label >Stock</label>
-                    <input required className='form-control' name='stock' type="text" onChange={handleChange} value={form.stock}/>
-                </FormGroup>
-                <FormGroup>
+                    <input required className='form-control' name='stock' type="number" onChange={handleChange} value={form.stock}/>
+                </div>
+                <div className='form-card'>
                     <label >marca_id</label>
                     <input required className='form-control' name='marca_id' type="number" onChange={handleChange} value={form.marca_id}/>
-                </FormGroup>
-                <FormGroup>
+                </div>
+                <div className='form-card'>
                     <label >seccion_id</label>
                     <input required className='form-control' name='seccion_id' type="number" onChange={handleChange} value={form.seccion_id}/>
-                </FormGroup>
+                </div>
 
-            </ModalBody>
+            </div>
 
-            <ModalFooter>
-                <Button color='primary'>Insertar</Button>
-                <Button onClick={handleReset} color='danger'>Limpiar</Button>
-            </ModalFooter>
+            <div className='form-buttons'>
+                <button className='button button--green'>Send</button>
+                <button className='button button--red' onClick={handleReset} >Clear</button>
+            </div>
         </form> 
   )
 }

@@ -1,20 +1,19 @@
 import React from "react";
-import {Button} from 'reactstrap'  
 const CrudTableRow = ( {product , deleteProduct, setDataToEdit}) => {
+  const {id, nombre, precio, stock } = product;
   return (
     <tr>
-      <td>{product.id}</td>
-      <td>{product.nombre}</td>
-      <td>{product.precio}</td>
-      <td>{product.stock}</td>
-      <td>
-        <Button
+      <td>{nombre}</td>
+      <td>{precio}</td>
+      <td>{stock}</td>
+      <td className="center">
+        <button className="button button--blue"
           onClick={() => setDataToEdit(product)}
-          color="primary"
+         
         >
-          Editar
-        </Button>{" "}
-        <Button color="danger" onClick={() => deleteProduct(product.id)}> Eliminar</Button>
+          edit
+        </button>{" "}
+        <button className="button button--red" onClick={() => deleteProduct(id)}>Delete</button>
       </td>
     </tr>
   );

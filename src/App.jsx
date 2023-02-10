@@ -5,7 +5,6 @@ import Home from './pages/Home'
     return (
             <Routes>
                 <Route path="/" element={<Home/>} />
-               
            </Routes>
     )
 }
