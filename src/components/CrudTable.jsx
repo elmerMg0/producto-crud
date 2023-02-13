@@ -1,8 +1,8 @@
-import React from "react";
+import React , { useState}from "react";
 import CrudTableRow from "./CrudTableRow";
 import "../styles/styles.css";
 import Paginador from "./Paginador";
-
+import ModalProduct from './ModalProduct'
 const CrudTable = ({
   products,
   deleteProduct,
@@ -11,6 +11,8 @@ const CrudTable = ({
   setPageNumber,
   setPageSize,
 }) => {
+  const [ modalProduct, setModalProduct ] = useState({product: {}, show: false})
+
   return (
     <div className="contenedor-table">
       <h3 className="center">Products List</h3>
@@ -32,6 +34,7 @@ const CrudTable = ({
                 product={product}
                 deleteProduct={deleteProduct}
                 setDataToEdit={setDataToEdit}
+                setModalProduct={setModalProduct}
               />
             ))
           ) : (
@@ -50,6 +53,12 @@ const CrudTable = ({
           </tr>
         </tbody>
       </table>
+      {
+        modalProduct.show ? 
+        <ModalProduct modalProduct={modalProduct} setModalProduct={setModalProduct}/>
+        :
+        null
+      }
     </div>
   );
 };

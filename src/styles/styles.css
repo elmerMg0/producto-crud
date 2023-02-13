@@ -10,7 +10,7 @@
     box-sizing: border-box;
 }
 /* Globales */
-html{
+body{
     padding: 0;
     margin: 0; 
     font-size: 18px;
@@ -128,4 +128,39 @@ th{
     max-width: 300px;
     width: 90%;
     margin: auto;
+}
+
+.modal-product{
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 1px 4px 12px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 1px 4px 12px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 4px 12px 0px rgba(0,0,0,0.75);;
+    padding: 10px;
+    max-width: 400px;
+    width: 90%;
+}
+.modal-product .close{
+    border-bottom: 1px solid black;
+    margin: 0px;
+    text-align: right;
+    cursor: pointer;
+}
+.header{
+    background-color: black;
+    margin: 0;
+    padding: 20px;
+    position:sticky;
+    top: 0;
+
+}
+.header h3{
+    margin: 0;
+    padding: 0;
+    color: white;
+    text-align: right;
+    cursor: pointer;
 }

@@ -111,7 +111,7 @@ export const ApiServices = {
       try {
         const response = await fetch(`${APIURL}producto/assign-category?producto_id=${productId}&categoria_id=${categoryId}`,{
           method:"GET",
-          header: {
+          headers: {
             'Authorization': token
           }
         });
@@ -167,3 +167,21 @@ export const userServices = {
       }
     }
 }
+/* 
+export const genericRequest = {
+  get : async ( url, params={}) => {
+    //let response = {} ;
+    try {
+      const response = await fetch(`${APIURL}${url}`,{
+        method: "GET",
+        headers: params
+      })
+      const data = await response.json();
+      data.status = response.status;
+      return data;
+      
+    } catch (error) {
+        console.error("Se produjo un error", error);
+    }
+},
+} */

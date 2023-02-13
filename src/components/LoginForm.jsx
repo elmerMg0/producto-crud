@@ -6,6 +6,7 @@ const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     userServices.userLogin(username, password).then((res) => {
@@ -16,7 +17,7 @@ const LoginForm = () => {
         showToast(res.message, "✅");
       } else {
         showToast(res.message, "⚠️");
-        console.log(res)
+        console.log(res)  
       }
     });
   };

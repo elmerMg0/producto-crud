@@ -1,8 +1,9 @@
-import React from "react";
-const CrudTableRow = ( {product , deleteProduct, setDataToEdit}) => {
+import React, { useEffect, useState } from "react";
+const CrudTableRow = ( {product , deleteProduct, setDataToEdit, setModalProduct}) => {
   const {id, nombre, precio, stock } = product;
+
   return (
-    <tr>
+    <tr onClick={()=> setModalProduct({product:product, show: true })}>
       <td>{nombre}</td>
       <td>{precio}</td>
       <td>{stock}</td>
@@ -13,7 +14,7 @@ const CrudTableRow = ( {product , deleteProduct, setDataToEdit}) => {
         >
           edit
         </button>{" "}
-        <button className="button button--red" onClick={() => deleteProduct(id)}>Delete</button>
+        <button className="button button--red" onClick={() => deleteProduct(id) }>Delete</button>
       </td>
     </tr>
   );
