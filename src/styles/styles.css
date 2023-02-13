@@ -15,6 +15,10 @@ html{
     margin: 0; 
     font-size: 18px;
 }
+.container-global{
+    width: 90%;
+    margin: auto;
+}
 .center{
     text-align: center;
 }
@@ -89,4 +93,39 @@ th{
     justify-content: center;
     align-items: center;
     gap: 10px;
+}
+
+/* product-category */
+.product-category{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 50px;
+}
+.card-categoryproduct{
+    width: 100%;
+}
+
+.card-categoryproduct select{
+    display: block;
+    width: 100%;
+    margin: 10px 0px;
+}
+.card-categoryproduct select{
+    padding: 8px;
+}
+
+@media ( max-width:  857px ){
+    .container{
+        grid-template-columns: 1fr;
+    }
+    .product-category{
+        flex-direction: column;
+    }
+}
+
+.login{
+    max-width: 300px;
+    width: 90%;
+    margin: auto;
 }

@@ -6,8 +6,8 @@ const AssignCataProduc = ( {accion, categories , products, assignCategoryToProdu
 
   return (
     <div>
-        <h5>"Asignar categoria a producto"</h5>
-        <div>
+        <h3>"Asignar categoria a producto"</h3>
+        <div className='card-categoryproduct'>
           <label>Seleccione un producto</label>
           <select onChange={(e) => setProductId(e.target.value)}>
             {
@@ -19,7 +19,7 @@ const AssignCataProduc = ( {accion, categories , products, assignCategoryToProdu
             }  
           </select>
         </div>
-        <div>
+        <div class="card-categoryproduct">
           <label >Seleccione una categoria</label>
           <select onChange={(e) => setCategoryId(e.target.value)}>
             {
@@ -32,7 +32,7 @@ const AssignCataProduc = ( {accion, categories , products, assignCategoryToProdu
           </select>
         </div>
         {
-          <button onClick={()=> assignCategoryToProduct(productId, categoryId)}>Asingar categoria</button>
+          <button className='button button--blue' onClick={()=> assignCategoryToProduct(productId, categoryId)}>Asingar categoria</button>
         }
       </div>
   )

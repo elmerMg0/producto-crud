@@ -25,7 +25,7 @@ const CrudTable = ({
         </thead>
 
         <tbody>
-          {products.length > 0 ? (
+          {products && products.length > 0 ? (
             products.map((product, index) => (
               <CrudTableRow
                 key={index}

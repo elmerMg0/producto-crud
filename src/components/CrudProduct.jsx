@@ -1,35 +1,42 @@
 import { useEffect, useState } from "react";
-import { ApiServices } from "../services/api.services";
+import { ApiServices, userServices } from "../services/api.services";
 //import { Table, Container, Button } from "reactstrap";
 import "../styles/styles.css";
 import CrudForm from "./CrudForm";
 import CrudTable from "./CrudTable";
 import { toast, Toaster } from "react-hot-toast";
-import ProductCategory from "./ProductCategory";
+import AssignProductCategory from "./AssignProductCategory";
 import UnssignProducCategory from "./UnssignProducCategory";
 
 export default function Producto() {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([  ]);
   const [infoProducts, setInfoProducts] = useState({});
   const [paginationInfo, setPaginationInfo] = useState({});
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [dataToEdit, setDataToEdit] = useState(null);
-
+  const [productId, setProductId] = useState(1)
+  const [cateBelongProduct, setCateBelongProduct] = useState([])
   useEffect(() => {
     getCategories();
-    getCategoriesBelongProduct();
+    getCategoriesBelongProduct()
+    userServices.setToken( JSON.parse(localStorage.getItem("userLoginToken")))
   }, []);
 
   useEffect(() => {
     getProducts();
   }, [pageNumber, pageSize]);
+
+/*   useEffect(() => {
+    getCategoriesBelongProduct();
+  }, [cateBelongProduct]); */
+
   //desmontaje de componentes
 
   const getCategoriesBelongProduct = ( id ) => {
     ApiServices.getCategoriesBelongProduct( id )
-                .then( res => console.log(res))
+                .then( res => setCateBelongProduct(res.categories))
   }
 
   const getCategories = () => {
@@ -89,6 +96,7 @@ export default function Producto() {
         } else {
           showToast(res.message, "⚠️");
         }
+        getProducts();
       });
     }
   };
@@ -102,15 +110,17 @@ export default function Producto() {
   };
 
   const unssignCategoryToProduct = (productId, categoryId) => {
+    console.log([productId, categoryId])
     ApiServices.unssignCategoryProduct(productId, categoryId).
                 then((res) =>{
                   res.status === 200 ? showToast(res.message, "✅") : showToast(res.message,  "⚠️") 
+                  getCategoriesBelongProduct( productId );
                 }
     );
   };
 
   return (
-    <>
+    <div className="container-global">
       <h3>{dataToEdit ? "Edit Product" : "Create New Producto"} </h3>
       <div className="container">
         <CrudForm
@@ -119,7 +129,6 @@ export default function Producto() {
           dataToEdit={dataToEdit}
           setDataToEdit={setDataToEdit}
         />
-        {products && products.length > 0 ? (
           <CrudTable
             products={products}
             deleteProduct={deleteProduct}
@@ -128,24 +137,24 @@ export default function Producto() {
             setPageNumber={setPageNumber}
             setPageSize={setPageSize}
           />
-        ) : null}
       </div>
-      <div className="">
+      <div className="product-category">
 
-        <ProductCategory
+        <AssignProductCategory
           categories={categories}
           products={products}
           assignCategoryToProduct={assignCategoryToProduct}
           />
-        
-        <UnssignProducCategory
-          categories={categories}
+      
+          <UnssignProducCategory
+          cateBelongProduct={cateBelongProduct}
           products={products}
           unssignCategoryToProduct={unssignCategoryToProduct}
+          getCategoriesBelongProduct={getCategoriesBelongProduct}
           />
         
       </div>
       <Toaster />
-    </>
+    </div>
   );
 }
