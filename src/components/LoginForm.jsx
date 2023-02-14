@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { userServices } from "../services/api.services";
 import { useNavigate } from "react-router";
 import {toast , Toaster} from 'react-hot-toast'
+import {useDispatch} from 'react-redux'
+import { addUser } from '../features/login/loginSlice'
+
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,6 +17,15 @@ const LoginForm = () => {
       if (res.status === 200) {
         navigate("/producto");
         window.localStorage.setItem("userLoginToken", JSON.stringify(res.accessToken));
+
+        const user = {
+          user: username,
+          token: res.accessToken,
+          isLogin: true,
+        }
+
+        dispatch(addUser(user))
+
         userServices.setToken(res.token);
         showToast(res.message, "✅");
       } else {

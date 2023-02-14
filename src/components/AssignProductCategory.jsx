@@ -19,7 +19,7 @@ const AssignCataProduc = ( {accion, categories , products, assignCategoryToProdu
             }  
           </select>
         </div>
-        <div class="card-categoryproduct">
+        <div className="card-categoryproduct">
           <label >Seleccione una categoria</label>
           <select onChange={(e) => setCategoryId(e.target.value)}>
             {

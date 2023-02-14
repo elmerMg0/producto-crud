@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ApiServices, userServices} from "../services/api.services";
+import { ApiServices, userServices, genericRequest} from "../services/api.services";
 //import { Table, Container, Button } from "reactstrap";
 import "../styles/styles.css";
 import CrudForm from "./CrudForm";
@@ -34,25 +34,37 @@ export default function Producto() {
 
   //desmontaje de componentes
 
-  const getCategoriesBelongProduct = ( id ) => {
-    ApiServices.getCategoriesBelongProduct( id )
-                .then( res => setCateBelongProduct(res.categories))
+  const getCategoriesBelongProduct = ( id = 0 ) => {
+    const params = `producto_id=${id}`
+    genericRequest.get("producto/get-categories-belong-product?",params)
+                .then( res => {
+                 if(res.status === 200)setCateBelongProduct(res.categories)
+                })
   }
 
   const getCategories = () => {
-    ApiServices.getCategories().then((res) => {
+    genericRequest.get("categoria/index").then((res) => {
       console.log(res);
       setCategories(res.categories);
     });
   };
 
   function getProducts() {
-    ApiServices.getProductos(pageNumber, pageSize).then((res) => {
+    const params = `page=${pageNumber}&pageSize=${pageSize}`
+    genericRequest.get( "producto/index?",params).then((res) => {
       if (res.status === 200) {
         setProducts(res.data);
         setPaginationInfo(res.pageInfo);
       }
     });
+
+
+  /*   ApiServices.getProductos(pageNumber, pageSize).then((res) => {
+      if (res.status === 200) {
+        setProducts(res.data);
+        setPaginationInfo(res.pageInfo);
+      }
+    }); */
   }
 
   const showToast = (message, icon) => {
@@ -70,7 +82,7 @@ export default function Producto() {
   };
 
   const createProduct = (product) => {
-    ApiServices.createProducto(product).then((res) => {
+    genericRequest.post("producto/create","",product).then((res) => {
       if (res.status === 201) {
         showToast(`${res.message}`, "✅");
       } else {
@@ -81,7 +93,8 @@ export default function Producto() {
   };
 
   const updateProduct = (product, id) => {
-    ApiServices.updateProduct(product, id).then((res) => {
+    const params = `id=${id}`
+    genericRequest.post("producto/update?",params ,product).then((res) => {
       getProducts();
       showToast(res.message, "✅");
       console.log(res);
@@ -102,7 +115,9 @@ export default function Producto() {
   };
 
   const assignCategoryToProduct = (productId, categoryId) => {
-    ApiServices.assignCategoryProduct(productId, categoryId).
+    const params = `producto_id=${productId}&categoria_id=${categoryId}`
+
+    genericRequest.get( "producto/assign-category?" ,params).
                 then((res) =>{
                   res.status === 200 ? showToast(res.message, "✅") : showToast(res.message,  "⚠️") 
                 }
@@ -110,8 +125,8 @@ export default function Producto() {
   };
 
   const unssignCategoryToProduct = (productId, categoryId) => {
-    console.log([productId, categoryId])
-    ApiServices.unssignCategoryProduct(productId, categoryId).
+    const params = `producto_id=${productId}&categoria_id=${categoryId}`
+    genericRequest.get("producto/unssign-category?", params).
                 then((res) =>{
                   res.status === 200 ? showToast(res.message, "✅") : showToast(res.message,  "⚠️") 
                   getCategoriesBelongProduct( productId );
