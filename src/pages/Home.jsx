@@ -6,7 +6,7 @@ import { userServices } from '../services/api.services'
 import { addUser } from '../features/login/loginSlice'
 
 function Home() {
-  const user = useSelector(state => state.login)
+  const isLogin = useSelector(state => state.login.isLogin)
   const dispatch = useDispatch(); 
 
   useEffect ( ()=>{
@@ -27,7 +27,7 @@ function Home() {
   return (
     <div>
         <Header/>
-        {user.isLogin && <Producto/>}
+        {isLogin && <Producto/>}
     </div>
   )
 }

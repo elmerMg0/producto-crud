@@ -3,8 +3,8 @@ const CrudTableRow = ( {product , deleteProduct, setDataToEdit, setModalProduct}
   const {id, nombre, precio, stock } = product;
 
   return (
-    <tr onClick={()=> setModalProduct({product:product, show: true })}>
-      <td>{nombre}</td>
+    <tr >
+      <td onClick={()=> setModalProduct({product:product, show: true })}>{nombre}</td>
       <td>{precio}</td>
       <td>{stock}</td>
       <td className="center">

@@ -88,7 +88,7 @@ export default function Producto() {
       } else {
         showToast(`${res.message}, error: ${res.error}`, "✅");
       }
-      console.log(res);
+      getProducts();
     });
   };
 
