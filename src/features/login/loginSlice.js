@@ -5,6 +5,10 @@ const initialState = {
     user: "",
     token: "",
     isLogin: false,
+    role: {
+        nombre: "",
+        permisos: []
+    }
 }
 
 export const loginSlice = createSlice({

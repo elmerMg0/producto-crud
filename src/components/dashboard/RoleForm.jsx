@@ -1,17 +1,42 @@
-import React from 'react'
+import React,{useState} from 'react'
 
-const RoleForm = () => {
+
+const initialRole = {
+  name: "",
+  description: ""
+}
+
+
+const RoleForm = ( {createRole} ) => {
+
+  const [role, setRole] = useState(initialRole)
+  
+  const handleSubmit = (e) => {
+    console.log(role)
+
+    e.preventDefault();
+    createRole(role);
+  }
+  
+  const handleChange = (e) => {
+    setRole({
+      ...role,
+      [e.target.name] : e.target.value
+    })
+  } 
+
   return (
-    <form >
+    <form onSubmit={handleSubmit}>
         <div>
             <label>Name</label>
-            <input required type="text" />
+            <input required type="text" name='name' value={role.name} onChange={handleChange}/>
         </div>
 
         <div>
             <label>Description</label>
-            <input type="text" />
+            <input type="text" name='description' value={role.description} onChange={handleChange}/>
         </div>
+        <button className='button button--blue'>Enviar</button>
     </form>
   )
 }
