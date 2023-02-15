@@ -1,10 +1,16 @@
-import React from 'react'
-import Header from '../components/Header'
-
+import React from "react";
+import Header from "../components/Header";
+import UserForm from "../components/dashboard/UserForm";
+import CrudUser from "../components/dashboard/CrudUser";
+import Authentication from "../components/dashboard/Authentication";
 const Dashboard = () => {
   return (
-        <Header/>
-    )
-}
+    <>
+      <Header />
+      <CrudUser/>
+      <Authentication/>
+    </>
+  );
+};
 
-export default Dashboard
+export default Dashboard;

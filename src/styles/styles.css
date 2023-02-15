@@ -164,3 +164,18 @@ th{
     text-align: right;
     cursor: pointer;
 }
+
+
+/* user-form */
+
+.user-form{
+ /*    max-width: 200px;
+    width: 90%;
+    margin: auto; */
+}
+
+.crud-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+}
