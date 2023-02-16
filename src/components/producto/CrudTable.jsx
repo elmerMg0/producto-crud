@@ -1,6 +1,5 @@
 import React , { useState}from "react";
 import CrudTableRow from "./CrudTableRow";
-import "../styles/styles.css";
 import Paginador from "./Paginador";
 import ModalProduct from './ModalProduct'
 const CrudTable = ({

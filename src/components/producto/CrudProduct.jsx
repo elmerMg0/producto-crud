@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { ApiServices, userServices, genericRequest} from "../services/api.services";
+import { ApiServices, userServices, genericRequest} from "../../services/api.services";
 //import { Table, Container, Button } from "reactstrap";
-import "../styles/styles.css";
+import "../../styles/styles.css";
 import CrudForm from "./CrudForm";
 import CrudTable from "./CrudTable";
 import { toast, Toaster } from "react-hot-toast";
@@ -57,14 +57,6 @@ export default function Producto() {
         setPaginationInfo(res.pageInfo);
       }
     });
-
-
-  /*   ApiServices.getProductos(pageNumber, pageSize).then((res) => {
-      if (res.status === 200) {
-        setProducts(res.data);
-        setPaginationInfo(res.pageInfo);
-      }
-    }); */
   }
 
   const showToast = (message, icon) => {

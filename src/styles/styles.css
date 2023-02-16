@@ -15,6 +15,9 @@ body{
     margin: 0; 
     font-size: 18px;
 }
+h1,h3,h5{
+    margin: 0;
+}
 .container-global{
     width: 90%;
     margin: auto;
@@ -110,10 +113,10 @@ th{
     display: block;
     width: 100%;
     margin: 10px 0px;
-}
-.card-categoryproduct select{
     padding: 8px;
 }
+/* .card-categoryproduct select{
+} */
 
 @media ( max-width:  857px ){
     .container{
@@ -178,4 +181,12 @@ th{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     place-items: center;
+}
+
+/* roleandpermission */
+.roleandpermission{
+    margin-top: 40px;
+}
+.assign-role-user{
+    margin-top: 40px;
 }

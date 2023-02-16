@@ -4,8 +4,9 @@ import RoleTable from "./RoleTable";
 import { genericRequest } from "../../services/api.services";
 import PermissionForm from "./PermissionForm";
 import PermissionTable from "./PermisssionTable";
-import AssignPermissionRole from './AssignPermissionRole'
-
+import AssignPermissionRole from "./AssignPermissionRole";
+import {Toaster, toast} from 'react-hot-toast'
+import PermissionRoleTable from './PermissionRoleTable'
 const Authentication = () => {
   const [permissions, setPermissions] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -21,18 +22,18 @@ const Authentication = () => {
         setRoles(Object.values(res.roles));
       } else {
       }
-      console.log(permissions)
+      console.log(permissions);
     });
   };
 
   const getPermissions = () => {
     genericRequest.get("auth/get-permissions", "").then((res) => {
-        if (res.status === 200) {
-            setPermissions(Object.values(res.permissions));
-        } else {
-        }
-      });
-  }
+      if (res.status === 200) {
+        setPermissions(Object.values(res.permissions));
+      } else {
+      }
+    });
+  };
 
   const createRole = (data) => {
     genericRequest.post("auth/create-role", "", data).then((res) => {
@@ -42,13 +43,39 @@ const Authentication = () => {
     });
   };
 
-  const createPermissions = ( data )=>{
+  const createPermissions = (data) => {
     genericRequest.post("auth/create-permission", "", data).then((res) => {
-        if (res.status === 200) {
-          getPermissions();
-        }
-      });
-  }
+      if (res.status === 200) {
+        getPermissions();
+      }
+    });
+  };
+
+  const assignPermissionToRole = (data) => {
+    genericRequest.post("auth/assign-permission-to-role", "", data).then((res) => {
+      if (res.status === 200) {
+          showToast(res.message,"✅")
+      }else{
+        showToast(res.message,"⚠️")
+      }
+      console.log(res)
+    });
+  };
+
+  const showToast = (message, icon) => {
+    toast(message, {
+      icon: icon,
+      duration: 3000,
+      style: {
+        border: "2px solid #ff7c01",
+        padding: "10px",
+        color: "#fff",
+        background: "#000",
+        borderRadius: "4%",
+      },
+    });
+  };
+
 
   return (
     <div>
@@ -66,10 +93,15 @@ const Authentication = () => {
           <PermissionTable permissions={permissions} />
         </div>
       </div>
-    <div>
-        <AssignPermissionRole/>
-    </div>
-
+      <div className="crud-container">
+        <AssignPermissionRole
+          roles={roles}
+          permissions={permissions}
+          assignPermissionToRole={assignPermissionToRole}
+        />
+        <PermissionRoleTable roles={roles}/>
+      </div>
+      <Toaster/>
     </div>
   );
 };

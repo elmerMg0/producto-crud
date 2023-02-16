@@ -6,7 +6,7 @@ import Authentication from "../components/dashboard/Authentication";
 import {useSelector,useDispatch} from 'react-redux'
 import {userServices} from '../services/api.services'
 import { addUser } from '../features/login/loginSlice'
-
+import AssingRoleUser from "../components/dashboard/AssingRoleUser"
 const Dashboard = () => {
 
   const isLogin = useSelector(state => state.login.isLogin)
@@ -35,6 +35,7 @@ const Dashboard = () => {
         <>
         <CrudUser/>
         <Authentication/>
+        <AssingRoleUser/>
         </>
         :
         null

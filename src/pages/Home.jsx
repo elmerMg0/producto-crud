@@ -1,5 +1,5 @@
 import React, {useEffect}from 'react'
-import Producto from '../components/CrudProduct'
+import Producto from '../components/producto/CrudProduct'
 import Header from "../components/Header"
 import {useSelector, useDispatch} from 'react-redux'
 import { userServices } from '../services/api.services'
