@@ -7,7 +7,8 @@ import CrudTable from "./CrudTable";
 import { toast, Toaster } from "react-hot-toast";
 import AssignProductCategory from "./AssignProductCategory";
 import UnssignProducCategory from "./UnssignProducCategory";
-
+import {useDispatch , useSelector} from 'react-redux'
+import { addUser } from '../../features/login/loginSlice'
 export default function Producto() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([  ]);
@@ -18,11 +19,42 @@ export default function Producto() {
   const [dataToEdit, setDataToEdit] = useState(null);
   const [productId, setProductId] = useState(1)
   const [cateBelongProduct, setCateBelongProduct] = useState([])
+  const dispatch = useDispatch()
+  const permissions = useSelector(state => state.login.permissions)
+  const [create, setCreate] = useState(false)
+  const [assign, setAssign] = useState(false)
+  const [unssing, setUnssign] = useState(false)
+
+
   useEffect(() => {
     getCategories();
     getCategoriesBelongProduct()
     userServices.setToken( JSON.parse(localStorage.getItem("userLoginToken")))
   }, []);
+
+  useEffect( () => {
+    if(permissions){
+        setCreate(permissions.some(per => per.name === "createProducts"))
+        setAssign(permissions.some(per => per.name === "assignCategory"))
+        setUnssign(permissions.some(per => per.name === "unssignCategory"))
+      console.log(assign)
+      }
+},[permissions])
+
+  useEffect ( ()=>{
+    const userJSON = window.localStorage.getItem("user");
+    if(userJSON){
+      const user = JSON.parse(userJSON);
+      
+      dispatch(addUser({
+        username: user.user,
+        token: user.token,
+        isLogin: true,
+        permissions: user.permissions
+      }))
+    }
+  },[] )
+
 
   useEffect(() => {
     getProducts();
@@ -130,12 +162,15 @@ export default function Producto() {
     <div className="container-global">
       <h3>{dataToEdit ? "Edit Product" : "Create New Producto"} </h3>
       <div className="container">
+        {
+          create &&
         <CrudForm
-          createProduct={createProduct}
-          updateProduct={updateProduct}
-          dataToEdit={dataToEdit}
-          setDataToEdit={setDataToEdit}
+        createProduct={createProduct}
+        updateProduct={updateProduct}
+        dataToEdit={dataToEdit}
+        setDataToEdit={setDataToEdit}
         />
+        }
           <CrudTable
             products={products}
             deleteProduct={deleteProduct}
@@ -147,18 +182,22 @@ export default function Producto() {
       </div>
       <div className="product-category">
 
+      { assign && 
         <AssignProductCategory
           categories={categories}
           products={products}
           assignCategoryToProduct={assignCategoryToProduct}
           />
-      
+      }
+      {
+        unssing &&
           <UnssignProducCategory
           cateBelongProduct={cateBelongProduct}
           products={products}
           unssignCategoryToProduct={unssignCategoryToProduct}
           getCategoriesBelongProduct={getCategoriesBelongProduct}
           />
+        }
         
       </div>
       <Toaster />

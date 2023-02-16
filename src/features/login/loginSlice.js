@@ -5,10 +5,7 @@ const initialState = {
     user: "",
     token: "",
     isLogin: false,
-    role: {
-        nombre: "",
-        permisos: []
-    }
+    permissions: []
 }
 
 export const loginSlice = createSlice({
@@ -19,6 +16,7 @@ export const loginSlice = createSlice({
             state.user = action.payload.user
             state.token = action.payload.token
             state.isLogin = action.payload.isLogin
+            state.permissions = action.payload.permissions
         }
     }
 })

@@ -27,8 +27,8 @@ h1,h3,h5{
 }
 
 .container{
-    display: grid;
-    grid-template-columns: 1fr 2fr;
+    display: flex;
+    /* grid-template-columns: 1fr 2fr; */
     gap: 20px;
     width: 100%;
     place-items: center;
@@ -71,6 +71,10 @@ input[type="text"]{
 
 .button.button--red{
     background-color: var(--colorRed);
+}
+
+.button.button--gris{
+    background-color: rgb(160, 147, 147);
 }
 
 .button.button--blue{

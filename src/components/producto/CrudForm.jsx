@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import {useSelector} from 'react-redux'
 
     const initialForm = {
         nombre: "",
@@ -11,13 +12,24 @@ import React, { useEffect, useState } from 'react'
 
 const CrudForm = ( {createProduct, updateProduct, dataToEdit, setDataToEdit}) => {
     const [form, setForm] = useState(initialForm);
+    const [permission, setPermission] = useState(false)
+    const permissions = useSelector(state => state.login.permissions)
 
     useEffect( ()=> {
         if(dataToEdit){
             setForm(dataToEdit);
         }
+  
     },[dataToEdit])
     
+    useEffect( () => {
+        if(permissions){
+            console.log(permissions)
+            let flag = permissions.some(per => per.name === "createProducts")
+            console.log(flag)
+            setPermission(flag);
+        }
+    },[permissions])
 
     const handleSubmit = (e) => {
         console.log("enviar")

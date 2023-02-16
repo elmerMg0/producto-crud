@@ -22,8 +22,10 @@ const LoginForm = () => {
           user: username,
           token: res.accessToken,
           isLogin: true,
+          permissions: Object.values(res.permissions)
         }
-
+        console.log(user)
+        window.localStorage.setItem("user", JSON.stringify(user));
         dispatch(addUser(user))
 
         userServices.setToken(res.token);
