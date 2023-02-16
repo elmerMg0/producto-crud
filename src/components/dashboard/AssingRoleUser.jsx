@@ -30,10 +30,12 @@ const AssingRoleUser = () => {
   };
 
   const assignRoleToUser = () =>{
- /*    $params = `name=${role}&idUser=${user}`
-    genericRequest.get("auth/assign-permission?", $params).then(res => {
+    const $params = `name=${role}&idUser=${user}`
+    genericRequest.get("auth/assign-role?", $params).then(res => {
+        if(res.status === 200){
 
-    }) */
+        }
+    })
     console.log(user,role)
   }
 
