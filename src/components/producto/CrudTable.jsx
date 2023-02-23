@@ -3,6 +3,7 @@ import CrudTableRow from "./CrudTableRow";
 import Paginador from "./Paginador";
 import ModalProduct from './ModalProduct'
 import {useSelector} from 'react-redux'
+import { createGlobalStyle } from "styled-components";
 
 const CrudTable = ({
   products,
@@ -16,6 +17,7 @@ const CrudTable = ({
   const permissions = useSelector(state => state.login.permissions)
   const [edit, setEdit] = useState(false)
   const [remove, setRemove] = useState(false)
+  const [productsFilter, setProductsFilter] = useState([])
 
   useEffect( () => {
     if(permissions){
@@ -24,9 +26,16 @@ const CrudTable = ({
     }
 },[permissions])
  
+  const handleSearchProduct = (e) => {
+      setProductsFilter(products.filter(prod => prod.nombre.includes(e.target.value)))
+      console.log(e.target.value)
+    }
 return (
     <div className="contenedor-table">
       <h3 className="center">Products List</h3>
+      <div>
+      <input type="search" onChange={handleSearchProduct}/>
+      </div>
       <table>
         <thead>
           <tr>
@@ -38,8 +47,9 @@ return (
         </thead>
 
         <tbody>
-          {products && products.length > 0 ? (
-            products.map((product, index) => (
+          {productsFilter && productsFilter.length > 0 ? (
+
+            productsFilter.map((product, index) => (
               <CrudTableRow
                 key={index}
                 product={product}
