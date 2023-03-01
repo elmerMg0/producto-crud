@@ -1,11 +1,22 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 
-const initialState = {
-    user: "",
-    token: "",
-    isLogin: false,
-    permissions: []
+const user = window.localStorage.getItem("user")
+let initialState; 
+if(user){
+    initialState = {
+        user: user.user,
+        token: user.token,
+        isLogin: true,
+        permissions: user.permissions
+    }
+}else{
+        initialState = {
+        user: "",
+        token: "",
+        isLogin: false,
+        permissions: []
+    }
 }
 
 export const loginSlice = createSlice({
@@ -17,7 +28,8 @@ export const loginSlice = createSlice({
             state.token = action.payload.token
             state.isLogin = action.payload.isLogin
             state.permissions = action.payload.permissions
-        }
+        },
+       
     }
 })
 export const { addUser } = loginSlice.actions
